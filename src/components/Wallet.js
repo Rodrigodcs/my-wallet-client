@@ -2,32 +2,42 @@ import styled from "styled-components"
 import exit from "../assets/exit.svg"
 import plus from "../assets/plus.svg"
 import minus from "../assets/minus.svg"
-import {useState, useContext, useEffect} from "react"
+import WalletHistory from "./WalletHistory"
+import {useContext} from "react"
 import UserContext from "../contexts/UserContext"
 import {Link, useHistory} from "react-router-dom"
 import axios from "axios"
 
 export default function SignUp() {
+    const {userInfo} = useContext(UserContext)
+    let history= useHistory()
 
-    
+    function logout(){
+        //FAZER UMA ROTA DELETE AQUI PARA DELETAR O TOKEN
+        localStorage.removeItem('myWalletUserInfo')
+        history.push("/")
+    }
+
     return (
         <Wrapper>
             <Header>
-                <Title>Olá, fulano</Title>
-                <img src={exit}></img>
+                <Title>Olá, {userInfo.user.name}</Title>
+                <img src={exit} onClick={logout}></img>
             </Header>
-            <WalletHistory>
-
-            </WalletHistory>
+            <WalletHistory/>
             <Buttons>
-                <Button>
-                    <img src={plus}></img>
-                    <p>Nova<br/>entrada</p>
-                </Button>
-                <Button>
-                    <img src={minus}></img>
-                    <p>Nova<br/>saida</p>
-                </Button>
+                <Link to="/cash-in">
+                    <Button>
+                        <img src={plus}></img>
+                        <p>Nova<br/>entrada</p>
+                    </Button>
+                </Link>
+                <Link to="/cash-out">
+                    <Button>
+                        <img src={minus}></img>
+                        <p>Nova<br/>saida</p>
+                    </Button>
+                </Link>
             </Buttons>
         </Wrapper>
     )
@@ -54,19 +64,11 @@ const Header= styled.div`
 `
 
 const Title= styled.h1`
-    font-family: 'Saira Stencil One', cursive;
     font-style: normal;
-    font-weight: normal;
-    font-size: 32px;
-    line-height: 50px;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 31px;
     color: #FFFFFF;
-`
-
-const WalletHistory= styled.div`
-    width: 100%;
-    height: calc(100vh - 114px - 130px);
-    background: #FFFFFF;
-    border-radius: 5px;
 `
 
 const Buttons= styled.div`
@@ -83,7 +85,8 @@ const Button = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding:10px;
-    width: 156px;
+    width:156px;
+    
     height: 114px;
     background: #A328D6;
     border-radius: 5px;

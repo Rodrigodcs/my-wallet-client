@@ -124,7 +124,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-    width: 326px;
+    width: 100%;
     height: 46px;
     background: #A328D6;
     border-radius: 5px;
