@@ -5,17 +5,29 @@ import {Link, useHistory} from "react-router-dom"
 import axios from "axios"
 
 export default function SignUp() {
-    const [email, setEmail] = useState("")
-    const [password,setPassword] = useState("")
-    const [username, setUsername] = useState("")
-    const [pictureUrl,setPictureUrl] = useState("")
+    const [name, setName] = useState("")
+    const [email,setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirmation,setPasswordConfirmation] = useState("")
     let history = useHistory();
     const [requesting,setRequesting] = useState(false)
 
     function register(e){
         e.preventDefault()
-        setRequesting(true)
-        console.log("what")
+        if(password===passwordConfirmation){
+            setRequesting(true)
+            const body = {name,email,password}
+            axios.post("http://localhost:4000/sign-up",body).then(r=>{
+                console.log(r)
+                setRequesting(false)
+                history.push("/")
+            }).catch(e=> {
+                console.log(e)
+                setRequesting(false)
+            })
+        }else{
+            alert("As senhas não são iguais")
+        }
     }
 
     return (
@@ -25,10 +37,10 @@ export default function SignUp() {
                     MyWallet
                 </Title>
                 <Form onSubmit={register}>
-                    <Input type="email" placeholder="e-mail" value={email} onChange={e=>setEmail(e.target.value)}></Input>
-                    <Input type="password" placeholder="password" value={password} onChange={e=>setPassword(e.target.value)}></Input>
-                    <Input type="text" placeholder="username" value={username} onChange={e=>setUsername(e.target.value)}></Input>
-                    <Input type="url" placeholder="picture url" value={pictureUrl} onChange={e=>setPictureUrl(e.target.value)}></Input>
+                    <Input type="text" placeholder="Nome" value={name} onChange={e=>setName(e.target.value)}></Input>
+                    <Input type="email" placeholder="E-mail" value={email} onChange={e=>setEmail(e.target.value)}></Input>
+                    <Input type="password" placeholder="Senha" value={password} onChange={e=>setPassword(e.target.value)}></Input>
+                    <Input type="password" placeholder="Confirmar a senha" value={passwordConfirmation} onChange={e=>setPasswordConfirmation(e.target.value)}></Input>
                     {requesting?
                         <Button>Cadastrando...</Button>:
                         <Button type="submit">Cadastrar</Button>

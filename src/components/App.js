@@ -1,5 +1,5 @@
 import {GlobalStyle} from "./GlobalStyle"
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route, useHistory} from "react-router-dom"
 import SignUp from "./SignUp"
 import SignIn from "./SignIn"
 import Wallet from "./Wallet"
@@ -8,7 +8,7 @@ import {useState} from "react"
 
 export default function App(){
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('myWalletUserInfo'))!==null?JSON.parse(localStorage.getItem('myWalletUserInfo')):"");
-
+    
     return (
         <UserContext.Provider value={{userInfo, setUserInfo}}>
             <Router>
