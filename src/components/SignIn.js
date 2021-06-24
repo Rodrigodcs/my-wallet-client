@@ -25,12 +25,14 @@ export default function SignIn() {
         axios.post("http://localhost:4000/sign-in",body).then(r=>{
             console.log(r)
             localStorage.setItem('myWalletUserInfo', JSON.stringify(r.data));
+            setUserInfo(r.data)
             setRequesting(false)
             history.push("/wallet")
         }).catch(e=> {
             console.log(e)
             setRequesting(false)
         })
+
         
     }
 

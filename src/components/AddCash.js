@@ -13,8 +13,6 @@ export default function AddCash() {
     const {userInfo} = useContext(UserContext)
     let history=useHistory()
 
-    //CREATE TABLE transactions (id SERIAL, "userId" INTEGER, value INTEGER, description TEXT, "cashIn" BOOLEAN, date TIMESTAMP);
-
     function cashIn(e){
         e.preventDefault()
         setRequesting(true)
@@ -26,20 +24,29 @@ export default function AddCash() {
             cashIn: true,
             date: dayjs()
         }
-        console.log(body)
-        const config = {headers:{Authorization:`Bearer ${userInfo.token}`}}
-        //axios.post("http://localhost:4000/cash-in",body,config)
-        console.log(config)
+        const config = {
+            headers:{
+                Authorization:`Bearer ${userInfo.token}`
+        }}
+
+        axios.post("http://localhost:4000/transaction",body,config).then(r=>{
+            console.log(r)
+            setRequesting(false)
+            history.push("/wallet")
+        }).catch(e=>{
+            console.log(e)
+            setRequesting(false)
+        })
     }
 
     return (
         <Wrapper>
             <Header>
                 <Title>Nova entrada</Title>
-                <img src={back} onClick={()=>history.push("/wallet")}></img>
+                <img src={back} alt="close" onClick={()=>history.push("/wallet")}></img>
             </Header>
             <Form onSubmit={cashIn}>
-                <Input type="number" placeholder="Valor" value={value} onChange={e=>setValue(e.target.value)}></Input>
+                <Input type="number" placeholder="Valor (centavos)" value={value} onChange={e=>setValue(e.target.value)}></Input>
                 <Input type="text" placeholder="Descrição" value={description} onChange={e=>setDescription(e.target.value)}></Input>
                 {requesting?
                     <Button>Salvando...</Button>:

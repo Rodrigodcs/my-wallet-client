@@ -6,14 +6,12 @@ import WalletHistory from "./WalletHistory"
 import {useContext} from "react"
 import UserContext from "../contexts/UserContext"
 import {Link, useHistory} from "react-router-dom"
-import axios from "axios"
 
 export default function SignUp() {
     const {userInfo} = useContext(UserContext)
     let history= useHistory()
 
     function logout(){
-        //FAZER UMA ROTA DELETE AQUI PARA DELETAR O TOKEN
         localStorage.removeItem('myWalletUserInfo')
         history.push("/")
     }
@@ -22,19 +20,19 @@ export default function SignUp() {
         <Wrapper>
             <Header>
                 <Title>Olá, {userInfo.user.name}</Title>
-                <img src={exit} onClick={logout}></img>
+                <img src={exit} alt="exit" onClick={logout}></img>
             </Header>
             <WalletHistory/>
             <Buttons>
                 <Link to="/cash-in">
                     <Button>
-                        <img src={plus}></img>
+                        <img src={plus} alt="logout"></img>
                         <p>Nova<br/>entrada</p>
                     </Button>
                 </Link>
                 <Link to="/cash-out">
                     <Button>
-                        <img src={minus}></img>
+                        <img src={minus} alt="logout"></img>
                         <p>Nova<br/>saida</p>
                     </Button>
                 </Link>
