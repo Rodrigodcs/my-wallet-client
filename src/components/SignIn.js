@@ -21,6 +21,7 @@ export default function SignIn() {
     function login(e){
         e.preventDefault()
         setRequesting(true)
+        console.log("front")
         const body = {email,password}
         axios.post("http://localhost:4000/sign-in",body).then(r=>{
             console.log(r)

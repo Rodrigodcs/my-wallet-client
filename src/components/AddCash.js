@@ -4,7 +4,6 @@ import UserContext from "../contexts/UserContext"
 import back from "../assets/back.svg"
 import { useHistory } from "react-router-dom"
 import axios from "axios"
-import dayjs from "dayjs"
 
 export default function AddCash() {
     const [value, setValue] = useState("")
@@ -22,7 +21,6 @@ export default function AddCash() {
             value,
             description,
             cashIn: true,
-            date: dayjs()
         }
         const config = {
             headers:{
