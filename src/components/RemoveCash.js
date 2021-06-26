@@ -27,8 +27,7 @@ export default function AddCash() {
                 Authorization:`Bearer ${userInfo.token}`
         }}
 
-        axios.post("http://localhost:4000/transaction",body,config).then(r=>{
-            console.log(r)
+        axios.post("https://my-wallet-server.herokuapp.com/transaction",body,config).then(r=>{
             setRequesting(false)
             history.push("/wallet")
         }).catch(e=>{
@@ -122,4 +121,5 @@ const Button = styled.button`
     font-size: 20px;
     line-height: 23px;
     color: #FFFFFF;
+    cursor: pointer;
 `;

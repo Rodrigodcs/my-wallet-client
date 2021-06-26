@@ -17,8 +17,7 @@ export default function SignUp() {
         if(password===passwordConfirmation){
             setRequesting(true)
             const body = {name,email,password}
-            axios.post("http://localhost:4000/sign-up",body).then(r=>{
-                console.log(r)
+            axios.post("https://my-wallet-server.herokuapp.com/sign-up",body).then(r=>{
                 setRequesting(false)
                 history.push("/")
             }).catch(e=> {
@@ -131,5 +130,6 @@ const Button = styled.button`
     font-size: 20px;
     line-height: 23px;
     color: #FFFFFF;
+    cursor: pointer;
 `;
 

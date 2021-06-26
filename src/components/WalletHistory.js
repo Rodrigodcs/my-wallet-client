@@ -3,6 +3,7 @@ import Transaction from "./Transaction"
 import {useState, useContext, useEffect} from "react"
 import UserContext from "../contexts/UserContext"
 import axios from "axios"
+import loadingGif from "../assets/loading.gif"
 
 export default function WalletHistory() {
     const {userInfo} = useContext(UserContext)
@@ -15,8 +16,7 @@ export default function WalletHistory() {
             headers:{
                 Authorization:`Bearer ${userInfo.token}`
         }}
-        axios.get("http://localhost:4000/wallet-history",config).then(r=>{
-            console.log(r)
+        axios.get("https://my-wallet-server.herokuapp.com/wallet-history",config).then(r=>{
             setTransactions(r.data)
             let credit=0
             r.data.forEach((t)=>{
@@ -32,26 +32,32 @@ export default function WalletHistory() {
         })
 	}, [userInfo.token]);
     if(loading){
-        return (<Wrapper>LOADING</Wrapper>)
+        return (<Wrapper><img src={loadingGif} alt="loading gif"></img></Wrapper>)
     }
     
     return (
         <Wrapper>
-            <Rows>
-                {transactions.map(t=>
-                    <Transaction 
-                        key={t.id}
-                        date={t.date} 
-                        description={t.description} 
-                        value={t.value} 
-                        cashIn={t.cashIn}
-                    />
-                )}
-            </Rows>
-            <Total>
-                <p>SALDO</p>
-                <span className={total<0?"negativo":"positivo"}>{(Math.abs(total/100)).toFixed(2).replace(".",",")}</span>
-            </Total>
+            {transactions.length?
+                <>
+                    <Rows>
+                        {transactions.map(t=>
+                            <Transaction 
+                                key={t.id}
+                                date={t.date} 
+                                description={t.description} 
+                                value={t.value} 
+                                cashIn={t.cashIn}
+                            />
+                        )}
+                    </Rows>
+                    <Total>
+                        <p>SALDO</p>
+                        <span className={total<0?"negativo":"positivo"}>{(Math.abs(total/100)).toFixed(2).replace(".",",")}</span>
+                    </Total>
+                </>:
+                <h3>Não há registros de<br/> entrada ou saída</h3>
+            }
+                
         </Wrapper>
     )
 }
@@ -78,6 +84,19 @@ const Wrapper= styled.div`
     .negativo{
         font-weight: normal;
         color:#C70000;
+    }
+    img{
+        width:100px;
+        margin: 0 auto;
+    }
+    h3{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 23px;
+        text-align: center;
+        color: #868686;
+        margin:auto;
     }
 
 `

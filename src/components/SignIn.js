@@ -21,10 +21,8 @@ export default function SignIn() {
     function login(e){
         e.preventDefault()
         setRequesting(true)
-        console.log("front")
         const body = {email,password}
-        axios.post("http://localhost:4000/sign-in",body).then(r=>{
-            console.log(r)
+        axios.post("https://my-wallet-server.herokuapp.com/sign-in",body).then(r=>{
             localStorage.setItem('myWalletUserInfo', JSON.stringify(r.data));
             setUserInfo(r.data)
             setRequesting(false)
@@ -136,4 +134,5 @@ const Button = styled.button`
     font-size: 20px;
     line-height: 23px;
     color: #FFFFFF;
+    cursor: pointer;
 `;

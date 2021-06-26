@@ -51,6 +51,9 @@ const Wrapper= styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    img{
+        cursor: pointer;
+    }
 `
 
 const Header= styled.div`
@@ -76,6 +79,9 @@ const Buttons= styled.div`
     width:100%;
     gap:15px;
     margin-bottom: 16px;
+    a{
+        width:100%;
+    }
 `
 
 const Button = styled.div`
@@ -83,7 +89,7 @@ const Button = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding:10px;
-    width:156px;
+    width:100%;
     
     height: 114px;
     background: #A328D6;
